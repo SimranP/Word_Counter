@@ -1,11 +1,12 @@
 import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
-class WC {
+class WC{
   private String text;
+  private String fileName;
 
-  public WC(String text){
+  public WC(String text,String fileName){
     this.text = text;
+    this.fileName = fileName;
   };
 
   public int characters(){
@@ -20,7 +21,10 @@ class WC {
 
   public int lines(){
     Pattern p = Pattern.compile("\\n");
-    return p.split(this.text).length-1;
+    return p.split(this.text).length;
   };
 
-}
+  public String representation(){
+    return "\t"+this.lines()+"\t"+this.words()+"\t"+this.characters()+"\t"+this.fileName;
+  };
+};
