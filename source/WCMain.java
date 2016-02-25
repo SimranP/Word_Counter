@@ -1,40 +1,54 @@
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-import java.io.BufferedReader;
 
 public class WCMain{
-  private static String fileReader(String fileName) throws FileNotFoundException,IOException{
-    File file = new File(fileName);
-      FileReader f_reader = new FileReader(file);
-      char[] d = new char[(int)file.length()];
-      f_reader.read(d);
-      String data = new String(d);
-      return data;
-  };
-
   private static void getCountForFiles(String[] files)throws IOException{
-    long totalChars = 0;
-    long totalWords = 0;
-    long totalLines = 0;
+    Total total = new Total(files).invoke();
+    if(files.length>1)
+      System.out.println("\t" + total.getTotalLines() + "\t" + total.getTotalWords() + "\t" + total.getTotalChars() + "\t" + "total");
+  };
 
-    for (int i = 0;i<files.length ;i++ ) {
-      try{
-        String text = fileReader(files[i]);
-        WC someText = new WC(text,files[i]);
-        totalChars = totalChars+someText.characters();
-        totalWords = totalWords+someText.words();
-        totalLines = totalLines+someText.lines();
-        System.out.println(someText.representation());
-      }catch(FileNotFoundException err){
-        System.out.println(err.getMessage());
-      };
+
+
+  private static class Total {
+    private String[] files;
+    private long totalChars = 0;
+    private long totalWords = 0;
+    private long totalLines = 0;
+
+    public Total(String[] files) {
+      this.files = files;
     }
-    System.out.println("\t"+totalLines+"\t"+totalWords+"\t"+totalChars+"\t"+"total");
-  };
 
-  public static void main(String[] args)  throws IOException{
-    getCountForFiles(args);
-  };
+    public long getTotalChars() {
+      return totalChars;
+    }
+
+    public long getTotalWords() {
+      return totalWords;
+    }
+
+    public long getTotalLines() {
+      return totalLines;
+    }
+
+    public Total invoke() throws IOException {
+      for (int i = 0;i<files.length ;i++ ) {
+        try{
+          String text = new File_reader(files[i]).read();
+          WC someText = new WC(text,files[i]);
+          totalChars += someText.characters();
+          totalWords += someText.words();
+          totalLines += someText.lines();
+          System.out.println(someText.representation());
+        }catch(FileNotFoundException err){
+          System.out.println(err.getMessage());
+        }
+      }
+      return this;
+    }
+  }
+    public static void main(String[] args)  throws IOException{
+        getCountForFiles(args);
+    }
 }

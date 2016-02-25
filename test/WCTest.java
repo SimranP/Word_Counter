@@ -3,25 +3,25 @@ import org.junit.Test;
 
 public class WCTest {
   @Test
-  public void countCharaters_gives_the_number_of_characters_in_piece_of_text(){
+  public void countCharacters_gives_the_number_of_characters_in_piece_of_text(){
     WC someText = new WC("","");
     assertEquals(someText.characters(),0);
   };
 
   @Test
-  public void countCharaters_gives_the_number_of_characters_in_piece_of_text1(){
+  public void countCharacters_gives_the_number_of_characters_in_piece_of_text1(){
     WC someText = new WC("apple","");
     assertEquals(someText.characters(),5);
   };
 
   @Test
-  public void countCharaters_gives_the_number_of_characters_in_piece_of_text2(){
+  public void countCharacters_gives_the_number_of_characters_in_piece_of_text2(){
     WC someText = new WC("apple\nmango","");
     assertEquals(someText.characters(),11);
   };
 
   @Test
-  public void countCharaters_gives_the_number_of_characters_in_piece_of_text3(){
+  public void countCharacters_gives_the_number_of_characters_in_piece_of_text3(){
     WC someText = new WC("apple\n\rmango","");
     assertEquals(someText.characters(),12);
   };
